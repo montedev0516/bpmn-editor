@@ -1,26 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import BpmnJS from 'bpmn-js/lib/Modeler';
 import BpmnModeler from 'bpmn-js/lib/Modeler';
-import {
-  CreateAppendAnythingModule,
-  CreateAppendElementTemplatesModule
-} from 'bpmn-js-create-append-anything';
-import {
-  BpmnPropertiesPanelModule,
-  BpmnPropertiesProviderModule,
-  ZeebePropertiesProviderModule
-} from 'bpmn-js-properties-panel';
-import BpmnColorPickerModule from 'bpmn-js-color-picker';
-import executableFixModule from 'bpmn-js-executable-fix';
-// import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
-import zeebeModdle from "zeebe-bpmn-moddle/resources/zeebe.json";
-import {
-  ElementTemplatesPropertiesProviderModule, // Camunda 7 Element Templates
-  CloudElementTemplatesPropertiesProviderModule // Camunda 8 Element Templates
-} from 'bpmn-js-element-templates';
-import ElementTemplateChooserModule from '@bpmn-io/element-template-chooser';
-
-import ZeebeBehaviorModule from 'camunda-bpmn-js-behaviors/lib/camunda-cloud';
 
 import example from '../../../../element-templates/example.json';
 
@@ -217,23 +197,10 @@ const Editor = () => {
           parent: propertiesRef.current,
         },
         additionalModules: [
-          CreateAppendAnythingModule,
-          CreateAppendElementTemplatesModule,
-          BpmnColorPickerModule,
-          executableFixModule,
-          BpmnPropertiesPanelModule,
-          BpmnPropertiesProviderModule,
-          ElementTemplatesPropertiesProviderModule,
-          // ConnectorsExtensionModule,
-          CloudElementTemplatesPropertiesProviderModule,
-          ElementTemplateChooserModule,
-          ZeebePropertiesProviderModule,
-          ZeebeBehaviorModule
         ],
         appendAnything: true,
         elementTemplateChooser: true,
         moddleExtensions: {
-          zeebe: zeebeModdle
         }
       });
 
@@ -244,7 +211,7 @@ const Editor = () => {
         showTemplateErrors(errors);
       });
 
-      bpmnModeler.current.get('elementTemplatesLoader').setTemplates(example);
+      // bpmnModeler.current.get('elementTemplatesLoader').setTemplates(example);
 
       const eventBus = bpmnModeler.current.get('eventBus');
       const canvas = bpmnModeler.current.get('canvas');
