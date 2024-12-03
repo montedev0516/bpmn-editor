@@ -3,13 +3,30 @@ import React, { useEffect, useRef, useState } from 'react';
 import BpmnModeler from 'bpmn-js/lib/Modeler';
 import {
   CreateAppendAnythingModule,
+  CreateAppendElementTemplatesModule
 } from 'bpmn-js-create-append-anything';
 import {
   BpmnPropertiesPanelModule,
   BpmnPropertiesProviderModule,
+  ZeebePropertiesProviderModule
 } from 'bpmn-js-properties-panel';
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
 import executableFixModule from 'bpmn-js-executable-fix';
+// import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
+import zeebeModdle from "zeebe-bpmn-moddle/resources/zeebe.json";
+import ElementTemplateIconRenderer from '@bpmn-io/element-template-icon-renderer';
+import {
+  ElementTemplatesPropertiesProviderModule, // Camunda 7 Element Templates
+  CloudElementTemplatesPropertiesProviderModule // Camunda 8 Element Templates
+} from 'bpmn-js-element-templates';
+import ElementTemplateChooserModule from '@bpmn-io/element-template-chooser';
+
+import ZeebeBehaviorModule from 'camunda-bpmn-js-behaviors/lib/camunda-cloud';
+
+import example from '../../../../element-templates/example.json';
+
+// import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
+import '@bpmn-io/element-template-chooser/dist/element-template-chooser.css';
 
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
@@ -55,7 +72,6 @@ const Editor = () => {
   });
   const [openDialog, setOpenDialog] = useState(false);
   const [downloadFormat, setDownloadFormat] = useState('xml');
-  const [selectedColor, setSelectedColor] = useState('#000000'); // Default color
   const [openHelpModal, setOpenHelpModal] = useState(false); // State to control help modal visibility
 
   const handleFileChange = (event) => {
@@ -139,9 +155,10 @@ const Editor = () => {
 
   const createNewDiagrams = async () => {
     const payload = {
-      id: diagramID,
+      diagramID: diagramID,
     };
-    await createDiagrams(payload);
+    const response = await createDiagrams(payload);
+    console.log("createDiagrams: ", response);
     await fetchDiagrams();
   };
 
@@ -177,6 +194,19 @@ const Editor = () => {
 
   const debouncedSave = debounce(saveDiagram, 1000);
 
+  const showTemplateErrors = (errors) => {
+    console.error('Failed to parse element templates', errors);
+
+    const errorMessage = `Failed to parse element templates:
+  
+      ${errors.map(error => error.message).join('\n    ')}
+  
+      Check the developer tools for details.`;
+
+    document.querySelector('.error-panel pre').textContent = errorMessage;
+    document.querySelector('.error-panel').classList.toggle('hidden');
+  }
+
   useEffect(() => {
     if (bpmnRef.current) {
       // bpmnModeler.current = new BpmnJS({
@@ -189,13 +219,35 @@ const Editor = () => {
         },
         additionalModules: [
           CreateAppendAnythingModule,
-          // CreateAppendElementTemplatesModule,
+          CreateAppendElementTemplatesModule,
           BpmnColorPickerModule,
           executableFixModule,
           BpmnPropertiesPanelModule,
-          BpmnPropertiesProviderModule
-        ]
+          BpmnPropertiesProviderModule,
+          ElementTemplatesPropertiesProviderModule,
+          ElementTemplateIconRenderer,
+          // ConnectorsExtensionModule,
+          CloudElementTemplatesPropertiesProviderModule,
+          ElementTemplateChooserModule,
+          ZeebePropertiesProviderModule,
+          ZeebeBehaviorModule
+        ],
+        appendAnything: true,
+        elementTemplateChooser: true,
+        moddleExtensions: {
+          zeebe: zeebeModdle
+        }
       });
+
+      bpmnModeler.current.on('elementTemplates.errors', event => {
+
+        const { errors } = event;
+
+        showTemplateErrors(errors);
+      });
+
+      bpmnModeler.current.get('elementTemplatesLoader').setTemplates(example);
+
       const eventBus = bpmnModeler.current.get('eventBus');
       const canvas = bpmnModeler.current.get('canvas');
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import url from '../api/api';
-import { logout } from '../utils/utils';
+// import { logout } from '../utils/utils';
 
 // Get Diagrams
 const getDiagrams = async (code?: string | null) => {
@@ -18,10 +18,10 @@ const getDiagrams = async (code?: string | null) => {
       if (error.response && error.response.status === 401) {
         console.error('Unauthorized: Invalid token or session expired');
         // Handle 401 errorlogout
-        logout();
+        // logout();
       } else {
         console.error('An error occurred:', error.response?.data);
-        logout();
+        // logout();
       }
     } else {
       console.error('An unexpected error occurred:', error);
@@ -45,10 +45,10 @@ const updateDiagrams = async (json: object) => {
       if (error.response && error.response.status === 401) {
         console.error('Unauthorized: Invalid token or session expired');
         // Handle 401 errorlogout
-        logout();
+        // logout();
       } else {
         console.error('An error occurred:', error.response?.data);
-        logout();
+        // logout();
       }
     } else {
       console.error('An unexpected error occurred:', error);
@@ -71,10 +71,10 @@ const createDiagrams = async (json: object) => {
       if (error.response && error.response.status === 401) {
         console.error('Unauthorized: Invalid token or session expired');
         // Handle 401 errorlogout
-        logout();
+        // logout();
       } else {
         console.error('An error occurred:', error.response?.data);
-        logout();
+        // logout();
       }
     } else {
       console.error('An unexpected error occurred:', error);
