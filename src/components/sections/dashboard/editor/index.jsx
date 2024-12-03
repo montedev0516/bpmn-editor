@@ -7,6 +7,8 @@ import {
   // CreateAppendElementTemplatesModule
 } from 'bpmn-js-create-append-anything';
 
+import BpmnColorPickerModule from 'bpmn-js-color-picker';
+
 import example from '../../../../element-templates/example.json';
 
 // import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
@@ -204,6 +206,7 @@ const Editor = () => {
         additionalModules: [
           CreateAppendAnythingModule,
           // CreateAppendElementTemplatesModule,
+          BpmnColorPickerModule
         ],
         appendAnything: true,
         elementTemplateChooser: true,
