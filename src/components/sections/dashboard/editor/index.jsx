@@ -12,7 +12,6 @@ import {
 } from 'bpmn-js-properties-panel';
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
 import executableFixModule from 'bpmn-js-executable-fix';
-// import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
 import zeebeModdle from "zeebe-bpmn-moddle/resources/zeebe.json";
 import ElementTemplateIconRenderer from '@bpmn-io/element-template-icon-renderer';
 import {
@@ -25,7 +24,6 @@ import ZeebeBehaviorModule from 'camunda-bpmn-js-behaviors/lib/camunda-cloud';
 
 import example from '../../../../element-templates/example.json';
 
-// import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
 import '@bpmn-io/element-template-chooser/dist/element-template-chooser.css';
 
 import 'bpmn-js/dist/assets/diagram-js.css';
