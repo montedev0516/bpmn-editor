@@ -26,7 +26,7 @@ export default defineConfig({
   build: {
     outDir: 'dist', // Default output directory
     rollupOptions: {
-      external: ['/bpmn-js-element-templates'],
+      external: ['../bpmn-js-element-templates'],
     },
   },
 });
