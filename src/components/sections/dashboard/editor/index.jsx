@@ -2,6 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 // import BpmnJS from 'bpmn-js/lib/Modeler';
 import BpmnModeler from 'bpmn-js/lib/Modeler';
 
+import {
+  CreateAppendAnythingModule,
+  // CreateAppendElementTemplatesModule
+} from 'bpmn-js-create-append-anything';
+
 import example from '../../../../element-templates/example.json';
 
 // import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
@@ -197,6 +202,8 @@ const Editor = () => {
           parent: propertiesRef.current,
         },
         additionalModules: [
+          CreateAppendAnythingModule,
+          // CreateAppendElementTemplatesModule,
         ],
         appendAnything: true,
         elementTemplateChooser: true,
