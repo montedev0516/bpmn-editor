@@ -1,21 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import BpmnJS from 'bpmn-js/lib/Modeler';
 import BpmnModeler from 'bpmn-js/lib/Modeler';
-
 import {
   CreateAppendAnythingModule,
-  // CreateAppendElementTemplatesModule
+  CreateAppendElementTemplatesModule
 } from 'bpmn-js-create-append-anything';
-
-import BpmnColorPickerModule from 'bpmn-js-color-picker';
-
 import {
   BpmnPropertiesPanelModule,
   BpmnPropertiesProviderModule,
   ZeebePropertiesProviderModule
 } from 'bpmn-js-properties-panel';
-
+import BpmnColorPickerModule from 'bpmn-js-color-picker';
+import executableFixModule from 'bpmn-js-executable-fix';
+// import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
 import zeebeModdle from "zeebe-bpmn-moddle/resources/zeebe.json";
+import ElementTemplateIconRenderer from '@bpmn-io/element-template-icon-renderer';
+import {
+  ElementTemplatesPropertiesProviderModule, // Camunda 7 Element Templates
+  CloudElementTemplatesPropertiesProviderModule // Camunda 8 Element Templates
+} from 'bpmn-js-element-templates';
+import ElementTemplateChooserModule from '@bpmn-io/element-template-chooser';
+
+import ZeebeBehaviorModule from 'camunda-bpmn-js-behaviors/lib/camunda-cloud';
 
 import example from '../../../../element-templates/example.json';
 
@@ -213,11 +219,18 @@ const Editor = () => {
         },
         additionalModules: [
           CreateAppendAnythingModule,
-          // CreateAppendElementTemplatesModule,
+          CreateAppendElementTemplatesModule,
           BpmnColorPickerModule,
+          executableFixModule,
           BpmnPropertiesPanelModule,
           BpmnPropertiesProviderModule,
-          ZeebePropertiesProviderModule
+          ElementTemplatesPropertiesProviderModule,
+          ElementTemplateIconRenderer,
+          // ConnectorsExtensionModule,
+          CloudElementTemplatesPropertiesProviderModule,
+          ElementTemplateChooserModule,
+          ZeebePropertiesProviderModule,
+          ZeebeBehaviorModule
         ],
         appendAnything: true,
         elementTemplateChooser: true,
@@ -233,7 +246,7 @@ const Editor = () => {
         showTemplateErrors(errors);
       });
 
-      // bpmnModeler.current.get('elementTemplatesLoader').setTemplates(example);
+      bpmnModeler.current.get('elementTemplatesLoader').setTemplates(example);
 
       const eventBus = bpmnModeler.current.get('eventBus');
       const canvas = bpmnModeler.current.get('canvas');
