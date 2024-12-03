@@ -9,6 +9,14 @@ import {
 
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
 
+import {
+  BpmnPropertiesPanelModule,
+  BpmnPropertiesProviderModule,
+  ZeebePropertiesProviderModule
+} from 'bpmn-js-properties-panel';
+
+import zeebeModdle from "zeebe-bpmn-moddle/resources/zeebe.json";
+
 import example from '../../../../element-templates/example.json';
 
 // import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
@@ -206,11 +214,15 @@ const Editor = () => {
         additionalModules: [
           CreateAppendAnythingModule,
           // CreateAppendElementTemplatesModule,
-          BpmnColorPickerModule
+          BpmnColorPickerModule,
+          BpmnPropertiesPanelModule,
+          BpmnPropertiesProviderModule,
+          ZeebePropertiesProviderModule
         ],
         appendAnything: true,
         elementTemplateChooser: true,
         moddleExtensions: {
+          zeebe: zeebeModdle
         }
       });
 
