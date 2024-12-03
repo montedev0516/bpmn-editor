@@ -14,7 +14,7 @@ import BpmnColorPickerModule from 'bpmn-js-color-picker';
 import executableFixModule from 'bpmn-js-executable-fix';
 // import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
 import zeebeModdle from "zeebe-bpmn-moddle/resources/zeebe.json";
-import ElementTemplateIconRenderer from '@bpmn-io/element-template-icon-renderer';
+
 import {
   ElementTemplatesPropertiesProviderModule, // Camunda 7 Element Templates
   CloudElementTemplatesPropertiesProviderModule // Camunda 8 Element Templates
@@ -225,7 +225,6 @@ const Editor = () => {
           BpmnPropertiesPanelModule,
           BpmnPropertiesProviderModule,
           ElementTemplatesPropertiesProviderModule,
-          ElementTemplateIconRenderer,
           // ConnectorsExtensionModule,
           CloudElementTemplatesPropertiesProviderModule,
           ElementTemplateChooserModule,
